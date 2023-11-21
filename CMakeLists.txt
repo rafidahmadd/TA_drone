@@ -227,8 +227,8 @@ catkin_package()
 
 ##add_executable(aruco_marker_detector src/aruco_marker_detector.cpp)
 ##target_link_libraries(aruco_marker_detector
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
+  ##${catkin_LIBRARIES}
+  ##${OpenCV_LIBRARIES}
   
 ##)
 
