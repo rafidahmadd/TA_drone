@@ -1,0 +1,10 @@
+<launch>
+	<include file="$(find px4)/launch/posix_sitl.launch">
+	
+	</include>
+
+	<!-- Our node to control the drone -->
+	<node pkg="drone_pkg" type="trial_SITL" name="trial_SITL" required="true" output="screen">
+		
+		</node>
+</launch>
