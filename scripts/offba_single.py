@@ -181,7 +181,7 @@ def startWaypoint():
     
 def waypoint():
     package = 'drone_pkg'
-    launch_file = 'singledronetrial.launch'
+    launch_file = 'singledrone Call.launch'
     uuid = roslaunch.rlutil.get_or_generate_uuid(None, False)
     roslaunch.configure_logging(uuid)
     launch_file = os.path.join(rospkg.RosPack().get_path(package), 'launch', launch_file)
