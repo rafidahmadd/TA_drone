@@ -1,4 +1,4 @@
 <launch>
-    <node name="waypoint_node" pkg="drone_pkg" type="singledroneWP" output="screen" >       
+    <node name="waypoint_node" pkg="drone_pkg" type="singledronewp" output="screen" >       
     </node>
 </launch>
