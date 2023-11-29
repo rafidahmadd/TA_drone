@@ -1,5 +1,5 @@
 <launch>
-    <node pkg="drone_pkg" type="offba_single.py" name="single drone trial" required="true" output="screen" >
+    <node pkg="drone_pkg" type="offba_single.py" name="singleDroneTrial" required="true" output="screen" >
 	</node>
 
     <include file="$(find mavros)/launch/node.launch">
