@@ -1,6 +1,6 @@
 <launch>
-    <include file="$(find drone_pkg)/launch/offba_single.launch">
-    </include>
+    <node pkg="drone_pkg" type="offba_single.py" name="single drone trial" required="true" output="screen" >
+	</node>
 
     <include file="$(find mavros)/launch/node.launch">
 
