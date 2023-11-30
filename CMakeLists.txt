@@ -226,22 +226,9 @@ add_executable(singledroneWP src/singledroneWP.cpp)
 target_link_libraries(singledroneWP ${catkin_LIBRARIES})
 
 find_package(OpenCV REQUIRED)
-find_package(aruco REQUIRED)
 
 catkin_package()
 
-add_executable(aruco_marker_detector src/aruco_marker_detector.cpp)
-target_link_libraries(aruco_marker_detector
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-  
-)
 
-add_executable(aruco_marker_detector_2 src/aruco_marker_detector_2.cpp)
-target_link_libraries(aruco_marker_detector_2
-  ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
-  
-)
 
 target_link_libraries(multidronecoba1 ${OpenCV_LIBRARIES})
