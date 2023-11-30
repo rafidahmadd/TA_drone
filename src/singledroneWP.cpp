@@ -1,5 +1,3 @@
-// Multi-UAVs (3 Drone) dengan WayPoint
-
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <mavros_msgs/CommandBool.h>
@@ -21,14 +19,14 @@
 #define WP_2_Y -12
 
 // Untuk Follow Aruco
-cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_4X4_250);
+// cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
 
-ros::Publisher vel_pub_uav1;
-ros::Publisher vel_pub_uav2;
-geometry_msgs::TwistStamped velocity_msg_uav1;
-geometry_msgs::TwistStamped velocity_msg_uav2;
+// ros::Publisher vel_pub_uav1;
+// ros::Publisher vel_pub_uav2;
+// geometry_msgs::TwistStamped velocity_msg_uav1;
+// geometry_msgs::TwistStamped velocity_msg_uav2;
 
-const int target_marker_id = 1;
+// const int target_marker_id = 1;
 
 // void imageCallback_uav1(const sensor_msgs::ImageConstPtr& msg10) {
 //     try {
@@ -250,24 +248,24 @@ int main(int argc, char **argv)
     // vel_pub_uav1 = nh_uav1.advertise<geometry_msgs::TwistStamped>("uav1/mavros/setpoint_velocity/cmd_vel", 1);
     
     // image_transport::ImageTransport it_uav2(nh_uav2);
-    // image_transport::Subscriber sub_uav2 = it_uav2.subscribe("iris2/usb_cam/image_raw/compressed", 1, imageCallback_uav2);
+    // image_transport::SubscDICT_6X6_250riber sub_uav2 = it_uav2.subscribe("iris2/usb_cam/image_raw/compressed", 1, imageCallback_uav2);
     // vel_pub_uav2 = nh_uav2.advertise<geometry_msgs::TwistStamped>("uav2/mavros/setpoint_velocity/cmd_vel", 1);
 
     // ros::Publisher pub = node_handle.advertise<message_type>(topic_name, queue_size);
     
     state_sub = nh.subscribe<mavros_msgs::State>
-            ("uav0/mavros/state", 10, state_cb);
+            ("mavros/state", 10, state_cb);
     local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
-            ("uav0/mavros/setpoint_position/local", 10);
+            ("mavros/setpoint_position/local", 10);
     arming_client = nh.serviceClient<mavros_msgs::CommandBool>
-            ("uav0/mavros/cmd/arming");
+            ("mavros/cmd/arming");
     land_client = nh.serviceClient<mavros_msgs::CommandTOL>
-            ("uav0/mavros/cmd/land");
+            ("mavros/cmd/land");
     set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
-            ("uav0/mavros/set_mode");
+            ("mavros/set_mode");
     //ros::Subscriber sub = nh_uav0.subscribe("uav0/mavros/local_position/pose", 10, poseCallback0);
-    local_pos_sub = nh.subscribe("uav0/mavros/local_position/odom", 10, follow0);
-    global_pos_sub = nh.subscribe("uav0/mavros/global_position/global", 10, gps0);
+    local_pos_sub = nh.subscribe("mavros/local_position/odom", 10, follow0);
+    global_pos_sub = nh.subscribe("mavros/global_position/global", 10, gps0);
     //global_pos_sub_uav0 = nh_uav0.subscribe("uav0/mavros/odometry/in", 10, gps0);
 
     // state_sub_uav1 = nh_uav1.subscribe<mavros_msgs::State>
@@ -440,20 +438,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = 0;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+0.5;
-    pose_uav1.pose.position.z = pose.pose.position.z;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+0.5;
+    // pose_uav1.pose.position.z = pose.pose.position.z;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-1,5;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-1,5;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("takeoff setinggi 3 meter");
     for(int i = 0; ros::ok() && i < 10*40; ++i){
 
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -465,20 +463,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_1_Y;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = pose.pose.position.z;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = pose.pose.position.z;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Menuju Waypoint Pertama");
     for(int i = 0; ros::ok() && i < 10*30; ++i){
 
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -490,20 +488,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_1_Y;
     pose.pose.position.z = 4;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = FLIGHT_ALTITUDE;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Master Naik ke 4 Meter");
     for(int i = 0; ros::ok() && i < 10*15; ++i){
       
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -515,13 +513,13 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_1_Y;
     pose.pose.position.z = 4;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y -1;
-    pose_uav1.pose.position.z = 2;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y -1;
+    // pose_uav1.pose.position.z = 2;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose.pose.position.y -1;
-    pose_uav2.pose.position.z = FLIGHT_ALTITUDE;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose.pose.position.y -1;
+    // pose_uav2.pose.position.z = FLIGHT_ALTITUDE;
 
     ROS_INFO("UAV1 mengambil data");
     
@@ -529,8 +527,8 @@ int main(int argc, char **argv)
     for(int i = 0; ros::ok() && i < 10*30; ++i){
       
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -599,11 +597,11 @@ int main(int argc, char **argv)
     ROS_INFO("Posisi gps uav1 x =%f", uav1_x);
     ROS_INFO("Posisi gps uav2 x =%f", uav2_x);
 
-    if (uav0_y == uav1_y) {
-        ROS_INFO("Patok Tidak Berubah");
-    } else {
-        ROS_ERROR("Patok Berubah!!");
-    }
+    // if (uav0_y == uav1_y) {
+    //     ROS_INFO("Patok Tidak Berubah");
+    // } else {
+    //     ROS_ERROR("Patok Berubah!!");
+    // }
 
     
     
@@ -615,20 +613,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_1_Y;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = pose.pose.position.z;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = pose.pose.position.z;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Assembly Formasi");
     for(int i = 0; ros::ok() && i < 10*20; ++i){
 
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -640,20 +638,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_2_Y;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = pose.pose.position.z;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = pose.pose.position.z;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Menuju Waypoint Kedua");
     for(int i = 0; ros::ok() && i < 10*30; ++i){
 
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -665,20 +663,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_2_Y;
     pose.pose.position.z = 4;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = FLIGHT_ALTITUDE;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Master Naik ke 4 Meter");
     for(int i = 0; ros::ok() && i < 10*15; ++i){
       
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -690,20 +688,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_2_Y;
     pose.pose.position.z = 4;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = FLIGHT_ALTITUDE;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose.pose.position.y+1;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose.pose.position.y+1;
     pose_uav2.pose.position.z = 2;
 
     ROS_INFO("UAV2 mengambil data");
     for(int i = 0; ros::ok() && i < 10*30; ++i){
       
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -726,11 +724,11 @@ int main(int argc, char **argv)
     ROS_INFO("Posisi gps uav1 x =%f", uav1_x);
     ROS_INFO("Posisi gps uav2 x =%f", uav2_x);
 
-    if (uav0_y == uav2_y){
-        ROS_INFO("Patok Tidak Berubah");
-    } else {
-        ROS_ERROR("Patok Berubah!!");
-    }
+    // if (uav0_y == uav2_y){
+    //     ROS_INFO("Patok Tidak Berubah");
+    // } else {
+    //     ROS_ERROR("Patok Berubah!!");
+    // }
     
     ROS_INFO("Data diterima");
 
@@ -739,20 +737,20 @@ int main(int argc, char **argv)
     pose.pose.position.y = WP_2_Y;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y+1;
-    pose_uav1.pose.position.z = pose.pose.position.z;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y+1;
+    // pose_uav1.pose.position.z = pose.pose.position.z;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y-2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Assembly Formasi");
     for(int i = 0; ros::ok() && i < 10*20; ++i){
 
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -763,21 +761,21 @@ int main(int argc, char **argv)
     pose.pose.position.y = 0;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    pose_uav1.pose.position.x = pose.pose.position.x;
-    pose_uav1.pose.position.y = pose.pose.position.y + 1;
-    pose_uav1.pose.position.z = pose.pose.position.z;
+    // pose_uav1.pose.position.x = pose.pose.position.x;
+    // pose_uav1.pose.position.y = pose.pose.position.y + 1;
+    // pose_uav1.pose.position.z = pose.pose.position.z;
 
-    pose_uav2.pose.position.x = pose_uav1.pose.position.x;
-    pose_uav2.pose.position.y = pose_uav1.pose.position.y - 2;
-    pose_uav2.pose.position.z = pose_uav1.pose.position.z;
+    // pose_uav2.pose.position.x = pose_uav1.pose.position.x;
+    // pose_uav2.pose.position.y = pose_uav1.pose.position.y - 2;
+    // pose_uav2.pose.position.z = pose_uav1.pose.position.z;
 
     ROS_INFO("Kembali ke Home Position");
     //send setpoints for 10 seconds
     for(int i = 0; ros::ok() && i < 10*30; ++i){
 
       local_pos_pub.publish(pose);
-      local_pos_pub_uav1.publish(pose_uav1);
-      local_pos_pub_uav2.publish(pose_uav2);
+    //   local_pos_pub_uav1.publish(pose_uav1);
+    //   local_pos_pub_uav2.publish(pose_uav2);
 
       ros::spinOnce();
       rate.sleep();
@@ -793,24 +791,24 @@ int main(int argc, char **argv)
         pose.pose.position.z -= 0.1;  // Decrease altitude by 0.1 meters per iteration
         
 
-        pose_uav1.header.stamp = ros::Time::now();
-        pose_uav1.pose.position.z -= 0.1;  // Decrease altitude by 0.1 meters per iteration
+        // pose_uav1.header.stamp = ros::Time::now();
+        // pose_uav1.pose.position.z -= 0.1;  // Decrease altitude by 0.1 meters per iteration
         
-        pose_uav2.header.stamp = ros::Time::now();
-        pose_uav2.pose.position.z -= 0.1;  // Decrease altitude by 0.1 meters per iteration
+        // pose_uav2.header.stamp = ros::Time::now();
+        // pose_uav2.pose.position.z -= 0.1;  // Decrease altitude by 0.1 meters per iteration
         
         for(int i = 0; ros::ok() && i < 10*2; ++i){
 
             local_pos_pub.publish(pose);
-            local_pos_pub_uav1.publish(pose_uav1);
-            local_pos_pub_uav2.publish(pose_uav2);
+            // local_pos_pub_uav1.publish(pose_uav1);
+            // local_pos_pub_uav2.publish(pose_uav2);
 
             ros::spinOnce();
             rate.sleep();
         }
 
         // Disarm the drone when soft landing is complete
-        if (current_state.armed && pose.pose.position.z && current_state_uav1.armed && pose_uav1.pose.position.z && current_state_uav2.armed && pose_uav2.pose.position.z <= 0.0) {
+        if (current_state.armed && pose.pose.position.z <= 0.0) {
             ROS_INFO("Soft landing complete. Disarming...");
 
             for(int i = 0; ros::ok() && i < 10*30; ++i){
@@ -824,14 +822,14 @@ int main(int argc, char **argv)
         }
 
 
-            // arm_cmd_uav0.request.value = false;
-            // if (arming_client_uav0.call(arm_cmd_uav0) && arm_cmd_uav0.response.success) {
-            //     ROS_INFO("Disarmed");
-            //     break;  // Exit the loop when disarmed
-            // } else {
-            //     ROS_ERROR("Failed to disarm");
-            //     return -1;
-            // }
+            arm_cmd.request.value = false;
+            if (arming_client.call(arm_cmd) && arm_cmd.response.success) {
+                 ROS_INFO("Disarmed");
+                 break;  // Exit the loop when disarmed
+             } else {
+                 ROS_ERROR("Failed to disarm");
+                 return -1;
+             }
         }
 
         
