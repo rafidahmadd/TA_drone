@@ -170,6 +170,8 @@ include_directories(
  catkin_install_python(PROGRAMS
    scripts/offba_drone.py
    scripts/waypoint.py
+   scripts/camera.py
+   scripts/offba_single.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
@@ -220,17 +222,26 @@ target_link_libraries(trial_SITL ${catkin_LIBRARIES})
 add_executable(multidronecoba1 src/multidronecoba1.cpp)
 target_link_libraries(multidronecoba1 ${catkin_LIBRARIES})
 
+add_executable(singledroneWP src/singledroneWP.cpp)
+target_link_libraries(singledroneWP ${catkin_LIBRARIES})
+
 find_package(OpenCV REQUIRED)
-##find_package(aruco REQUIRED)
+find_package(aruco REQUIRED)
 
 catkin_package()
 
-##add_executable(aruco_marker_detector src/aruco_marker_detector.cpp)
-##target_link_libraries(aruco_marker_detector
-  ##${catkin_LIBRARIES}
-  ##${OpenCV_LIBRARIES}
+add_executable(aruco_marker_detector src/aruco_marker_detector.cpp)
+target_link_libraries(aruco_marker_detector
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
   
-##)
+)
+
+add_executable(aruco_marker_detector_2 src/aruco_marker_detector_2.cpp)
+target_link_libraries(aruco_marker_detector_2
+  ${catkin_LIBRARIES}
+  ${OpenCV_LIBRARIES}
+  
+)
 
 target_link_libraries(multidronecoba1 ${OpenCV_LIBRARIES})
-
