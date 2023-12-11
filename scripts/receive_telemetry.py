@@ -1,18 +1,24 @@
-import time
-from pymavlink import mavutil
+import serial
 
-# Connect to Pixhawk over serial port
-master = mavutil.mavlink_connection('/dev/ttyACM0', baud=57600)
+def receive_telemetry(serial_port):
+    try:
+        # Open the serial port
+        ser = serial.Serial(serial_port, 57600, timeout=1)
+        print(f"Serial port {serial_port} opened successfully.")
 
-# Wait for the heartbeat message to confirm the connection
-master.wait_heartbeat()
+        # Receive telemetry data
+        telemetry_data = ser.readline().decode('utf-8').strip()
+        print(f"Telemetry received: {telemetry_data}")
 
-# Receive messages from Pixhawk
-while True:
-    msg = master.recv_msg()
-    if msg and msg.get_type() == "STATUSTEXT":
-        text = msg.text
-        if text.startswith("commandGCS:"):
-            # Process the message
-            print("Received command:", text)
-            # You can add your own logic here to handle the received message
+        # Close the serial port
+        ser.close()
+        print("Serial port closed.")
+
+    except serial.SerialException as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    # Replace '/dev/ttyUSB0' with the appropriate serial port on your Raspberry Pi
+    serial_port = '/dev/ttyACM0'
+
+    receive_telemetry(serial_port)
