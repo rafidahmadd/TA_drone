@@ -1,4 +1,0 @@
-<launch>
-    <node name="waypoint_node" pkg="drone_pkg" type="multidronecoba1" output="screen">       
-    </node>
-</launch>

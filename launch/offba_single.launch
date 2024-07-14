@@ -1,5 +1,0 @@
-<launch>
-  <!-- Our node to control the drone -->
-	<node pkg="drone_pkg" type="offba_single.py" name="single drone trial" required="true" output="screen" >
-	</node>
-</launch>
