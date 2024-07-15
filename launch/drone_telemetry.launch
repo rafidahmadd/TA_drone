@@ -1,5 +1,5 @@
 <launch>
-    <include file="$(find drone_pkg)/launch/offba_single.launch">
+    <include file="$(find drone_pkg)/launch/offba_drone_telemetry.launch">
     </include>
 
     <include file="$(find mavros)/launch/node.launch">
