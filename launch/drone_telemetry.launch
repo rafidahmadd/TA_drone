@@ -1,6 +1,0 @@
-<launch>
-  <!-- Our node to control the drone -->
-	<param name="x" type="int" value="1" />
-	<node pkg="drone_pkg" type="offba_drone_telemetry.py" name="drone_telemetry" required="true" output="screen" >
-	</node>
-</launch>
