@@ -168,10 +168,12 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
  catkin_install_python(PROGRAMS
-   scripts/offba_drone.py
-   scripts/waypoint.py
-   scripts/camera.py
-   scripts/offba_single.py
+   scripts/offba_drone_telemetry.py
+   scripts/receive_telemetry2.py
+   scripts/camera1.py
+   scripts/camera2.py
+   scripts/camera3.py
+   scripts/camera_check.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
@@ -216,19 +218,11 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(trial_SITL src/trial_SITL.cpp)
-target_link_libraries(trial_SITL ${catkin_LIBRARIES})
-
-add_executable(multidronecoba1 src/multidronecoba1.cpp)
-target_link_libraries(multidronecoba1 ${catkin_LIBRARIES})
-
 add_executable(singledroneWP src/singledroneWP.cpp)
 target_link_libraries(singledroneWP ${catkin_LIBRARIES})
 
 find_package(OpenCV REQUIRED)
 
 catkin_package()
-
-
 
 target_link_libraries(multidronecoba1 ${OpenCV_LIBRARIES})
