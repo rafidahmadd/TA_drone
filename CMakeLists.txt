@@ -168,7 +168,8 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
  catkin_install_python(PROGRAMS
-   scripts/offba_drone_telemetry.py
+   scripts/offba_drone_telemetry_master.py
+   scripts/offba_drone_telemetry_slave.py
    scripts/receive_telemetry2.py
    scripts/camera1.py
    scripts/camera2.py
