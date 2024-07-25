@@ -42,16 +42,16 @@ ros::ServiceClient land_client;
 
 int serial_port;
 
-void state_cb(const mavros_msgs::State::ConstPtr& msg) {
-    current_state = *msg;
+void state_cb(const mavros_msgs::State::ConstPtr& msg1) {
+    current_state = *msg1;
 }
 
-void follow(const geometry_msgs::PoseStamped::ConstPtr& msg) {
-    current_position = *msg;
+void follow(const geometry_msgs::PoseStamped::ConstPtr& msg2) {
+    current_position = *msg2;
 }
 
-void gps(const sensor_msgs::NavSatFix::ConstPtr& msg) {
-    current_gps_position = *msg;
+void gps(const sensor_msgs::NavSatFix::ConstPtr& msg3) {
+    current_gps_position = *msg3;
 }
 
 void send_string_to_serial(const std::string& data) {
@@ -146,92 +146,93 @@ int main(int argc, char **argv) {
 
     global_pos_sub;
     std::ostringstream oss;
-    oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
-    send_string_to_serial(oss.str());
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
-    send_string_to_serial(oss.str());
+    send_gps_to_serial(current_gps_position);
+    // oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
+    // send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
+    // send_string_to_serial(oss.str());
 
     send_string_to_serial("Takeoff setinggi 3 meter\n");
-    for (int i = 0; ros::ok() && i < 10 * 40; ++i) {
+    for (int i = 0; ros::ok() && i < 10 * 50; ++i) {
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
     }
-    send_string_to_serial("Ketinggian sudah 3 meter\n");
+    send_string_to_serial("ketinggian sudah 3 meter\n");
 
     pose.pose.position.x = WP_1_X;
     pose.pose.position.y = WP_1_Y;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    send_string_to_serial("Menuju Waypoint Pertama\n");
-    for (int i = 0; ros::ok() && i < 10 * 30; ++i) {
+    send_string_to_serial("Menuju Waypoint 1\n");
+    for (int i = 0; ros::ok() && i < 10 * 50; ++i) {
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
     }
-    send_string_to_serial("Waypoint Pertama Tercapai\n");
+    send_string_to_serial("Waypoint 1 tercapai, gambar diambil\n");
     send_gps_to_serial(current_gps_position);
     int result1 = system("python3 /home/mfproject2/catkin_ws/src/drone_pkg/scripts/capture_camera1.py");
 
     global_pos_sub;
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
-    send_string_to_serial(oss.str());
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
-    send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
+    // send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
+    // send_string_to_serial(oss.str());
 
     pose.pose.position.x = WP_2_X;
     pose.pose.position.y = WP_2_Y;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    send_string_to_serial("Menuju Waypoint Kedua\n");
-    for (int i = 0; ros::ok() && i < 10 * 30; ++i) {
+    send_string_to_serial("Menuju waypoint 2\n");
+    for (int i = 0; ros::ok() && i < 10 * 50; ++i) {
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
     }
-    send_string_to_serial("Waypoint Kedua Tercapai\n");
+    send_string_to_serial("Waypoint 2 tercapai, gambar diambil\n");
     send_gps_to_serial(current_gps_position);
     int result2 = system("python3 /home/mfproject2/catkin_ws/src/drone_pkg/scripts/capture_camera2.py");
 
     global_pos_sub;
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
-    send_string_to_serial(oss.str());
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
-    send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
+    // send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
+    // send_string_to_serial(oss.str());
 
     pose.pose.position.x = 0;
     pose.pose.position.y = 0;
     pose.pose.position.z = FLIGHT_ALTITUDE;
 
-    send_string_to_serial("Kembali ke Home Position\n");
-    for (int i = 0; ros::ok() && i < 10 * 30; ++i) {
+    send_string_to_serial("Kembali ke home position\n");
+    for (int i = 0; ros::ok() && i < 10 * 50; ++i) {
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
     }
-    send_string_to_serial("UAV sudah berada di Home\n");
+    send_string_to_serial("Home position tercapai\n");
 
     landDrone(nh);
     
     global_pos_sub;
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
-    send_string_to_serial(oss.str());
-    oss.str("");
-    oss.clear();
-    oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
-    send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 y =" << current_gps_position.longitude << "\n";
+    // send_string_to_serial(oss.str());
+    // oss.str("");
+    // oss.clear();
+    // oss << "Posisi gps uav0 x =" << current_gps_position.latitude << "\n";
+    // send_string_to_serial(oss.str());
 
     close(serial_port);
     return 0;
