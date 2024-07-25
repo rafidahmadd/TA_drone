@@ -219,8 +219,11 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-add_executable(singledroneWP src/singledroneWP.cpp)
-target_link_libraries(singledroneWP ${catkin_LIBRARIES})
+add_executable(singledroneWP_master src/singledroneWP_master.cpp)
+target_link_libraries(singledroneWP_master ${catkin_LIBRARIES})
+
+add_executable(singledroneWP_slave src/singledroneWP_slave.cpp)
+target_link_libraries(singledroneWP_slave ${catkin_LIBRARIES})
 
 find_package(OpenCV REQUIRED)
 
