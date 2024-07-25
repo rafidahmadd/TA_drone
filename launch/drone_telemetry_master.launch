@@ -1,6 +1,6 @@
 <launch>
-    <include file="$(find drone_pkg)/launch/offba_drone_telemetry.launch">
-    </include>
+   <node pkg="drone_pkg" type="offba_drone_telemetry_master.py" name="droneTelemetrySlave">
+</node>
 
     <include file="$(find mavros)/launch/node.launch">
 
