@@ -1,5 +1,5 @@
 <launch>
-   <node pkg="drone_pkg" type="offba_drone_telemetry_master.py" name="droneTelemetrySlave">
+   <node pkg="drone_pkg" type="offba_drone_telemetry_master.py" name="droneTelemetryMaster">
 </node>
 
     <include file="$(find mavros)/launch/node.launch">
