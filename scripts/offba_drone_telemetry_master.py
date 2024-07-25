@@ -144,7 +144,7 @@ def handle_serial_input(line, ser1, ser2, pub1, pub2):
     elif line == '2':
         # print(f'{timestamp} Data from PC: {line}')
         # print (line)
-        ser1.write((line).encode('utf-8'))
+        # ser1.write((line).encode('utf-8'))
         ser2.write((line).encode('utf-8'))
         # sendImage()
     elif line == '3':
