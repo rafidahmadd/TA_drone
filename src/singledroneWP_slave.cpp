@@ -173,7 +173,7 @@ int main(int argc, char **argv) {
     }
     send_string_to_serial("11");
     // send_gps_to_serial(current_gps_position);
-    int result1 = system("python3 /home/mfproject3/catkin_ws/src/drone_pkg/scripts/camera1.py");
+    int result1 = system("python3 /home/mfproject4/catkin_ws/src/drone_pkg/scripts/camera1.py");
 
     global_pos_sub;
     // oss.str("");
@@ -197,7 +197,7 @@ int main(int argc, char **argv) {
     }
     send_string_to_serial("11");
     // send_gps_to_serial(current_gps_position);
-    int result2 = system("python3 /home/mfproject3/catkin_ws/src/drone_pkg/scripts/camera2.py");
+    int result2 = system("python3 /home/mfproject4/catkin_ws/src/drone_pkg/scripts/camera2.py");
 
     global_pos_sub;
     // oss.str("");
