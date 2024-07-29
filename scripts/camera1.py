@@ -299,7 +299,7 @@ import cv2
 
 def capture_image(output_path):
     # Inisialisasi kamera (0 adalah ID kamera default)
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(0)
 
     # Cek apakah kamera berhasil diinisialisasi
     if not cap.isOpened():
@@ -329,5 +329,5 @@ def capture_image(output_path):
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    output_path = "/home/mfproject/Picture/captured/captured_image1.png"
+    output_path = "/home/mfproject4/Picture/captured/captured_image1.png"
     capture_image(output_path)
